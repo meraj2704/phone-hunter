@@ -1,9 +1,11 @@
+// call api for get searching data
 const phoneLoader = async (text,dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${text}`
     const res = await fetch(url);
     const data = await res.json();
     phoneDisplay(data.data,dataLimit);
 }
+// call api for get phone details data
 const loadDetails = async id =>
 {
     const url2 = ` https://openapi.programming-hero.com/api/phone/${id}`
@@ -11,8 +13,9 @@ const loadDetails = async id =>
     const data = await res.json()
     displayPhoneDetails(data.data);
 }
+// this function display phone details 
 const displayPhoneDetails = details =>{
-    console.log(details);
+    // console.log(details);
     const modalTitle = document.getElementById('staticBackdropLabel');
     modalTitle.innerText = details.name;
     const detailsDiv = document.getElementById('details-div');
@@ -25,6 +28,7 @@ const displayPhoneDetails = details =>{
     <p><b>Storage :</b>${details.mainFeatures ? details.mainFeatures.storage : 'No storage'}</p>
     `;
 }
+// this function display phone 
 const phoneDisplay = (phones,dataLimit) => {
     const phoneContainer = document.getElementById('phone-container');
     const showField = document.getElementById('show-field');
@@ -59,6 +63,7 @@ const phoneDisplay = (phones,dataLimit) => {
     }
     isSpining(false);
 }
+// this function get value from search field and sent to phone loader function to call api 
 const process = (dataLimit) => {
     isSpining(true);
     const searchField = document.getElementById('search-field');
@@ -66,9 +71,11 @@ const process = (dataLimit) => {
     phoneLoader(serachText,dataLimit);
     // searchField.value = '';
 }
+// this dom work when we clicl serach button and then call the process function
 document.getElementById('btn-search').addEventListener('click', function () {
     process(10);
 })
+//this dom work when we enter what we want search and then press enter button and then it call process function 
 document.getElementById('search-field').addEventListener('keypress', function (event) {
     if(event.key==='Enter')
     {
@@ -76,7 +83,7 @@ document.getElementById('search-field').addEventListener('keypress', function (e
     }
 })
 
-
+// this function work for loading spin
 const isSpining = spin => {
     const spinField = document.getElementById('spin-field');
     if (spin) {
@@ -86,6 +93,7 @@ const isSpining = spin => {
         spinField.classList.add('d-none');
     }
 }
+// this function show us all data when we click on show all data
 document.getElementById('btn-show-all').addEventListener('click', function(){
     process();
 })
